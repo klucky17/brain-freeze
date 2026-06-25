@@ -98,13 +98,14 @@ function Game({score, setScore}) {
         </ul>
       </div>
 
-      {/*display all flavours as buttons*/}
+      {/*display all items as buttons*/}
       <div className="buttons">
 
         {toppings.map((topping) => (
           <button
             key={topping}
-            onClick={() => addTopping(topping)}  /*add scoop*/
+            onClick={() => addTopping(topping)}  /*add topping*/
+            disabled={playerTopping.length >= 2}  /*max toppings = 2*/
           >
             {topping}
           </button>
@@ -113,7 +114,8 @@ function Game({score, setScore}) {
         {syrups.map((syrup) => (
           <button
             key={syrup}
-            onClick={() => addSyrup(syrup)}  /*add scoop*/
+            onClick={() => addSyrup(syrup)}  /*add syrup*/
+            disabled={playerSyrup.length >= 2}  /*max syrups = 2*/
           >
             {syrup}
           </button>
@@ -123,6 +125,7 @@ function Game({score, setScore}) {
           <button
             key={flavour}
             onClick={() => addIceCream(flavour)}  /*add scoop*/
+            disabled={playerIceCream.length >= flavours.length}  /*max scoops = total num of flavours*/
           >
             {flavour}
           </button>
@@ -131,7 +134,8 @@ function Game({score, setScore}) {
         {cones.map((cone) => (
           <button
             key={cone}
-            onClick={() => addCone(cone)}  /*add scoop*/
+            onClick={() => addCone(cone)}  /*add cone*/
+            disabled={playerCone != null}  /*disable cone buttons when a cone is already chosen*/
           >
             {cone}
           </button>
