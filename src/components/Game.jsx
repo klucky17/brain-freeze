@@ -52,6 +52,9 @@ function Game({score, setScore}) {
   function addTopping(item){
     setTopping([...playerTopping, item])
   }
+  function addItem(item){
+    setPlayerOrder([...playerOrder, item])
+  }
 
   function resetPlayerOrder(){
     setIceCream([])
@@ -65,7 +68,7 @@ function Game({score, setScore}) {
     const correct = JSON.stringify(order) === JSON.stringify(playerOrder) //compare orders
     if(correct){
       setScore(score + 25*(order.length-1))  //25 points for each item excluding the cone
-      resetPlayerOrder()  //reset created order
+      setPlayerOrder([])  //reset created order
       setOrder(getOrder())  //get new customer order
     }
   }
@@ -79,7 +82,8 @@ function Game({score, setScore}) {
   const [playerCone, setCone] = useState(null)  //can only have 1 cone at a time
   const [playerSyrup, setSyrup] = useState([])
   const [playerTopping, setTopping] = useState([])
-  const playerOrder = [playerCone, ...playerIceCream, ...playerSyrup, ...playerTopping]  //combine everything into 1 array
+  const [playerOrder, setPlayerOrder] = useState([])
+  //const playerOrder = [playerCone, ...playerIceCream, ...playerSyrup, ...playerTopping]  //combine everything into 1 array
 
   return(
     /*display current score*/
@@ -104,8 +108,9 @@ function Game({score, setScore}) {
         {toppings.map((topping) => (
           <button
             key={topping}
-            onClick={() => addTopping(topping)}  /*add topping*/
-            disabled={playerTopping.length >= 2}  /*max toppings = 2*/
+            onClick={() => addItem(topping)}  /*add topping*/
+            disabled={playerOrder.filter(i => toppings.includes(i)).length >= 2  /*max toppings = 2*/
+                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
           >
             {topping}
           </button>
@@ -114,8 +119,9 @@ function Game({score, setScore}) {
         {syrups.map((syrup) => (
           <button
             key={syrup}
-            onClick={() => addSyrup(syrup)}  /*add syrup*/
-            disabled={playerSyrup.length >= 2}  /*max syrups = 2*/
+            onClick={() => addItem(syrup)}  /*add syrup*/
+            disabled={playerOrder.filter(i => syrups.includes(i)).length >= 2  /*max syrups = 2*/
+                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
           >
             {syrup}
           </button>
@@ -124,8 +130,9 @@ function Game({score, setScore}) {
         {flavours.map((flavour) => (
           <button
             key={flavour}
-            onClick={() => addIceCream(flavour)}  /*add scoop*/
-            disabled={playerIceCream.length >= flavours.length}  /*max scoops = total num of flavours*/
+            onClick={() => addItem(flavour)}  /*add scoop*/
+            disabled={playerOrder.filter(i => flavours.includes(i)).length >= flavours.length  /*max scoops = total num of flavours*/
+                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
           >
             {flavour}
           </button>
@@ -134,8 +141,8 @@ function Game({score, setScore}) {
         {cones.map((cone) => (
           <button
             key={cone}
-            onClick={() => addCone(cone)}  /*add cone*/
-            disabled={playerCone != null}  /*disable cone buttons when a cone is already chosen*/
+            onClick={() => addItem(cone)}  /*add cone*/
+            disabled={playerOrder.some(i => cones.includes(i))}  /*disable cone buttons when a cone is already chosen*/
           >
             {cone}
           </button>
@@ -159,7 +166,7 @@ function Game({score, setScore}) {
       </button>
 
       {/*reset ice cream*/}
-      <button onClick={resetPlayerOrder}>
+      <button onClick={() => setPlayerOrder([])}>
         Garbage
       </button>
     </div>
