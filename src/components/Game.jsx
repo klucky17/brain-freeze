@@ -40,36 +40,29 @@ function Game({score, setScore}) {
     return order
   }
 
-  function addIceCream(item){
-    setIceCream([...playerIceCream, item])
-  }
-  function addCone(item){
-    setCone(item)
-  }
-  function addSyrup(item){
-    setSyrup([...playerSyrup, item])
-  }
-  function addTopping(item){
-    setTopping([...playerTopping, item])
-  }
   function addItem(item){
     setPlayerOrder([...playerOrder, item])
   }
 
-  function resetPlayerOrder(){
-    setIceCream([])
-    setCone(null)
-    setSyrup([])
-    setTopping([])
-  }
-
   //check if created ice cream matches customer order
   function checkOrder(){
-    const correct = JSON.stringify(order) === JSON.stringify(playerOrder) //compare orders
-    if(correct){
+    //filter out toppings
+    const customerBase = order.filter(i => !toppings.includes(i))
+    const playerBase = playerOrder.filter(i => !toppings.includes(i))
+
+    //extract the toppings -> sort so toppings dont have to be in exact order since the pictures I drew are hard to tell which one is first
+    const customerToppings = order.filter(i => toppings.includes(i)).sort()
+    const playerToppings = playerOrder.filter(i => toppings.includes(i)).sort()
+
+    //compare orders
+    const correctBase = JSON.stringify(customerBase) === JSON.stringify(playerBase)
+    const correctToppings = JSON.stringify(customerToppings) === JSON.stringify(playerToppings)
+    if(correctBase && correctToppings){
       setScore(score + 25*(order.length-1))  //25 points for each item excluding the cone
       setPlayerOrder([])  //reset created order
       setOrder(getOrder())  //get new customer order
+    } else{
+      score -= 100  //minus points for each wrong order
     }
   }
 
@@ -78,12 +71,7 @@ function Game({score, setScore}) {
   const syrups = ["Chocolate Syrup", "Strawberry Syrup", "Caramel Syrup"]
   const toppings = ["Cherries", "Sprinkles", "Marshmallows"]
   const [order, setOrder] = useState(getOrder())
-  const [playerIceCream, setIceCream] = useState([])
-  const [playerCone, setCone] = useState(null)  //can only have 1 cone at a time
-  const [playerSyrup, setSyrup] = useState([])
-  const [playerTopping, setTopping] = useState([])
   const [playerOrder, setPlayerOrder] = useState([])
-  //const playerOrder = [playerCone, ...playerIceCream, ...playerSyrup, ...playerTopping]  //combine everything into 1 array
 
   return(
     /*display current score*/
