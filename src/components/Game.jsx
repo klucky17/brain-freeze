@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './Game.css'
 
 function Game({score, setScore}) {
 
@@ -62,14 +63,21 @@ function Game({score, setScore}) {
       setPlayerOrder([])  //reset created order
       setOrder(getOrder())  //get new customer order
     } else{
-      score -= 100  //minus points for each wrong order
+      setScore(score - 100)  //minus points for each wrong order
     }
   }
 
-  const flavours = ["Vanilla", "Strawberry", "Chocolate", "Mint", "Ube", "Orange", "Bubble Gum", "Tomato", "Lemon"]  //all ice cream flavours
-  const cones = ["Cup", "Waffle"]
-  const syrups = ["Chocolate Syrup", "Strawberry Syrup", "Caramel Syrup"]
-  const toppings = ["Cherries", "Sprinkles", "Marshmallows"]
+  function displayOrder(item){
+    if(flavours.includes(item)) return `/scoops/${item} scoop.png`  //display scoop
+    if(toppings.includes(item)) return `/toppings/${item}.png`  //display topping
+    if(syrups.includes(item)) return `/toppings/${item}.png`  //display syrup
+    if(cones.includes(item)) return `/toppings/${item}.png`  //display cone
+  }
+
+  const flavours = ["ube", "mint", "orange", "vanilla", "strawberry", "chocolate", "raspberry", "bubblegum", "lemon"]  //all ice cream flavours
+  const cones = ["waffle", "cup"]
+  const syrups = ["caramel syrup", "strawberry syrup", "chocolate syrup"]
+  const toppings = ["sprinkles", "cherry", "cookie sticks"]
   const [order, setOrder] = useState(getOrder())
   const [playerOrder, setPlayerOrder] = useState([])
 
@@ -80,41 +88,17 @@ function Game({score, setScore}) {
 
       {/*customer order*/}
       <div className="order-box">
-        <h3>Order:</h3>
 
-      {/*display order from the array*/}
-        <ul>
-          {order.slice().reverse().map((item, index) => (  //reverse order so that cones are that the bottom, toppings at the top
-            <p key={index}>{item}</p>
-          ))}
-        </ul>
+      {/*display order from the array, reverse to show cone at the bottom*/}
+        {order.slice().reverse().map((item, index) => (
+          <img key={index} src={displayOrder(item)} alt={item} width={60} height={60} />
+        ))}
       </div>
 
       {/*display all items as buttons*/}
       <div className="buttons">
 
-        {toppings.map((topping) => (
-          <button
-            key={topping}
-            onClick={() => addItem(topping)}  /*add topping*/
-            disabled={playerOrder.filter(i => toppings.includes(i)).length >= 2  /*max toppings = 2*/
-                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
-          >
-            {topping}
-          </button>
-        ))}
-
-        {syrups.map((syrup) => (
-          <button
-            key={syrup}
-            onClick={() => addItem(syrup)}  /*add syrup*/
-            disabled={playerOrder.filter(i => syrups.includes(i)).length >= 2  /*max syrups = 2*/
-                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
-          >
-            {syrup}
-          </button>
-        ))}
-
+        <div className="flavour-buttons">
         {flavours.map((flavour) => (
           <button
             key={flavour}
@@ -122,39 +106,66 @@ function Game({score, setScore}) {
             disabled={playerOrder.filter(i => flavours.includes(i)).length >= flavours.length  /*max scoops = total num of flavours*/
                       || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
           >
-            {flavour}
+            <img src={`/buttons/${flavour}-tub.png`} alt={flavour} width={120} height={113} />
           </button>
         ))}
+        </div>
 
+        <div className="topping-buttons">
+        {toppings.map((topping) => (
+          <button
+            key={topping}
+            onClick={() => addItem(topping)}  /*add topping*/
+            disabled={playerOrder.filter(i => toppings.includes(i)).length >= 2  /*max toppings = 2*/
+                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
+          >
+            <img src={`/buttons/${topping}-jar.png`} alt={topping} width={75} height={90} />
+          </button>
+        ))}
+        </div>
+
+        <div className="syrup-buttons">
+        {syrups.map((syrup) => (
+          <button
+            key={syrup}
+            onClick={() => addItem(syrup)}  /*add syrup*/
+            disabled={playerOrder.filter(i => syrups.includes(i)).length >= 2  /*max syrups = 2*/
+                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
+          >
+            <img src={`/buttons/${syrup}-bottle.png`} alt={syrup} width={55} height={130} />
+          </button>
+        ))}
+        </div>
+
+        <div className="cone-buttons">
         {cones.map((cone) => (
           <button
             key={cone}
             onClick={() => addItem(cone)}  /*add cone*/
             disabled={playerOrder.some(i => cones.includes(i))}  /*disable cone buttons when a cone is already chosen*/
           >
-            {cone}
+            <img src={`/buttons/${cone}-button.png`} alt={cone} width={75} height={60} />
           </button>
         ))}
+        </div>
 
       </div>
 
       <div className="player-order">
-        <h3>Your Order:</h3>
-
         <ul>
           {playerOrder.filter(Boolean).slice().reverse().map((item, index) => (
-            <p key={index}>{item}</p>
+            <img key={index} src={displayOrder(item)} alt={item} width={60} height={60} />
           ))}
         </ul>
       </div>
 
       {/*check order and serve to customer*/}
-      <button onClick={checkOrder}>
+      <button className="serve-button" onClick={checkOrder}>
         Serve
       </button>
 
       {/*reset ice cream*/}
-      <button onClick={() => setPlayerOrder([])}>
+      <button className="garbage-button" onClick={() => setPlayerOrder([])}>
         Garbage
       </button>
     </div>
