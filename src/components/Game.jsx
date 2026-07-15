@@ -87,11 +87,16 @@ function Game({score, setScore}) {
       <h2>Score: {score}</h2>
 
       {/*customer order*/}
-      <div className="order-box">
+      <div className="order-box" key={order[0]+order.length}>  {/*key is for slide in animation*/}
 
-      {/*display order from the array, reverse to show cone at the bottom*/}
-        {order.slice().reverse().map((item, index) => (
-          <img key={index} src={displayOrder(item)} alt={item} width={60} height={60} />
+      {/*display order from the array*/}
+        {order.slice().map((item, index) => (
+          <img key={index} src={displayOrder(item)} alt={item} width={43}
+          height={syrups.includes(item) ? 25:
+                  toppings.includes(item) ? 20:
+                  40}  //scoops, cups -> default height
+
+          />
         ))}
       </div>
 
@@ -152,11 +157,19 @@ function Game({score, setScore}) {
       </div>
 
       <div className="player-order">
-        <ul>
-          {playerOrder.filter(Boolean).slice().reverse().map((item, index) => (
-            <img key={index} src={displayOrder(item)} alt={item} width={60} height={60} />
+          {playerOrder.filter(Boolean).slice().map((item, index) => (
+            <img key={index} src={displayOrder(item)} alt={item} width={63} 
+            height={syrups.includes(item) ? 38:
+                    toppings.includes(item) ? 30:
+                    60}  //scoops, cups -> default
+            style={{marginBottom:  //make the items layer ontop of each other nicley
+              syrups.includes(item) ? '-32px':
+              item === 'sprinkles' ? '-44px':
+              toppings.includes(item) ? '-17px':
+              '-12px'  //scoops, cups -> default
+            }}
+            />
           ))}
-        </ul>
       </div>
 
       {/*check order and serve to customer*/}
