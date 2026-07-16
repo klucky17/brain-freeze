@@ -164,7 +164,7 @@ function Game({score, setScore}) {
                     60}  //scoops, cups -> default
             style={{marginBottom:  //make the items layer ontop of each other nicley
               syrups.includes(item) ? '-32px':
-              item === 'sprinkles' ? '-44px':
+              item === 'sprinkles' ? '-31px':
               toppings.includes(item) ? '-17px':
               '-12px'  //scoops, cups -> default
             }}
