@@ -18,6 +18,7 @@ function App(){
       <Game
         score = {score}
         setScore = {setScore}
+        setGameStarted = {setGameStarted}
       />
     )}
     </>

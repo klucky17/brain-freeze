@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useState, useEffect} from 'react'
 import './Game.css'
 
 function Game({score, setScore}) {
@@ -81,10 +81,45 @@ function Game({score, setScore}) {
   const [order, setOrder] = useState(getOrder())
   const [playerOrder, setPlayerOrder] = useState([])
 
+  //game timer
+  const [time, setTime] = useState(60)  //60 seconds
+  const [gameOver, setGameOver] = useState(false)  //start with gameOver = false
+
+  useEffect(() => {
+    if(time === 0){  //timer done, times up
+      setGameOver(true)
+      return
+    }
+    const countdown = setTimeout(() => {
+      setTime(time - 1)  //minus 1 in the countdown timer
+    }, 1000)  //countdown every 1000 ms -> every 1 second
+    
+    return () => clearTimeout(countdown)  //cancel old timer before making a new one, useEffect runs again when time changes and creates a new setTimeOut
+  }, [time])  //rerun useEffect everytime time changes
+
   return(
     /*display current score*/
     <div className="game">
+      <h2 className="timer">{time}s</h2>
       <h2>Score: {score}</h2>
+
+      {/*game over pop up on top of the game*/}
+      {gameOver && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h2>Time's Up!</h2>
+            <p>Score: {score}</p>
+            <button className="popup-done" onClick={() => {
+              //reset everything
+              setTime(60)  //set time back to 60 seconds
+              setGameOver(false)
+              setScore(0)
+            }}>
+              Done
+            </button>
+          </div>
+        </div>
+      )}
 
       {/*customer order*/}
       <div className="order-box" key={order[0]+order.length}>  {/*key is for slide in animation*/}
@@ -160,12 +195,14 @@ function Game({score, setScore}) {
           {playerOrder.filter(Boolean).slice().map((item, index) => (
             <img key={index} src={displayOrder(item)} alt={item} width={63} 
             height={syrups.includes(item) ? 38:
+                    item === 'cherry' ? 24:
                     toppings.includes(item) ? 30:
                     60}  //scoops, cups -> default
             style={{marginBottom:  //make the items layer ontop of each other nicley
               syrups.includes(item) ? '-32px':
-              item === 'sprinkles' ? '-31px':
-              toppings.includes(item) ? '-17px':
+              item === 'cherry' ? '-14px':
+              item === 'cookie sticks' ? '-20px':
+              item === 'sprinkles' ? '-32px':
               '-12px'  //scoops, cups -> default
             }}
             />
