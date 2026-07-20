@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import './Game.css'
 
-function Game({score, setScore}) {
+function Game({score, setScore, setGameStarted}) {
 
   //get a random customer order for each new customer
   function getOrder(){
@@ -114,6 +114,7 @@ function Game({score, setScore}) {
               setTime(60)  //set time back to 60 seconds
               setGameOver(false)
               setScore(0)
+              setGameStarted(false)
             }}>
               Done
             </button>
