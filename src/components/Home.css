@@ -1,0 +1,42 @@
+.home{
+    background-image: url('/home screen.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;  /*full screen height*/
+    position: relative;
+    top: 0px;
+    right: 0px
+}
+
+.start-button{
+    background-color: rgb(117, 200, 241);
+    color: white;  /*text colour*/
+    padding: 20px 40px;  /*height, width*/
+    font-size: 3vh;
+    border-radius: 8px;  /*rounded corners*/
+    bottom: 12vh;
+    right: 31vh;
+    position: absolute;
+    font-size: 9vh;
+}
+
+.home-text{
+    position: absolute;
+    top: 12vh;
+    right: 15vh;
+    font-size: 5vh;
+    color: rgb(42, 150, 204);
+    text-align: center
+}
+
+.leaderboard{
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    height: 75vh;
+    width: 85vh;
+    position: absolute;
+    top: 12vh;
+    left: 12vh;
+}

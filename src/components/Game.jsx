@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import './Game.css'
+import {supabase} from '../supabase'
 
 function Game({score, setScore, setGameStarted}) {
 
@@ -97,6 +98,43 @@ function Game({score, setScore, setGameStarted}) {
     return () => clearTimeout(countdown)  //cancel old timer before making a new one, useEffect runs again when time changes and creates a new setTimeOut
   }, [time])  //rerun useEffect everytime time changes
 
+
+  //check compare with leaderboard
+  const [playerName, setPlayerName] = useState('')
+  const [isLeader, setIsLeader] = useState(false)
+
+  async function checkLeaderboard(){
+    const {data} = await supabase
+      .from('leaderboard')
+      .select('score')
+      .order('score', {ascending: false})  //desending so highest score at the top
+      .limit(10)  //only 10 ppl max on leaderboard
+
+      let lowestLeaderScore = 0  //default 0 if less than 10 leaders
+      if(data?.length >= 10){
+        lowestLeaderScore = data[data.length-1].score  //last score in leaders (lowest)
+      }
+      
+      if(score > lowestLeaderScore){
+        setIsLeader(true)
+      }
+  }
+
+  //so you can only submit to leaderboard one time
+  const [submitted, setSubmitted] = useState(false)
+  async function submitScore(){
+    await supabase
+      .from('leaderboard')
+      .insert([{name: playerName, score: score}])
+    setSubmitted(true)  //score submitted
+  }
+
+  useEffect(() => {
+    if(gameOver){
+      checkLeaderboard()
+    }
+  }, [gameOver])
+
   return(
     /*display current score*/
     <div className="game">
@@ -109,6 +147,21 @@ function Game({score, setScore, setGameStarted}) {
           <div className="popup">
             <h2>Time's Up!</h2>
             <p>Score: {score}</p>
+
+            {isLeader && !submitted && (
+              <>
+                <p>Congratulations you made it into the top 10 leaderboard!</p>
+                <input
+                  type = "text"
+                  placeholder = "Please enter your name"
+                  value = {playerName}
+                  onChange = {(e) => setPlayerName(e.target.value)}
+                />
+                <button onClick={submitScore}>Submit Score</button>
+              </>
+            )}
+            {submitted && <p>Score submitted to leaderboard!</p>}
+
             <button className="popup-done" onClick={() => {
               //reset everything
               setTime(60)  //set time back to 60 seconds
