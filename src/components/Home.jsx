@@ -27,7 +27,7 @@ function Home({ score, startGame }) {
       <div className="home-text">
         <h1>Brain Freeze</h1>
 
-        <h2>High Score: {score}</h2>
+        <h2>High Score: {highscore}</h2>
       </div>
 
       <button className="start-button" onClick={startGame}>
