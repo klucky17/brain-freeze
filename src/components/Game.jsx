@@ -169,19 +169,21 @@ function Game({score, setScore, setGameStarted}) {
       {gameOver && (
         <div className="popup-overlay">
           <div className="popup">
-            <h2>Time's Up!</h2>
+            <h1>Time's Up!</h1>
             <p>Score: {score}</p>
 
             {isLeader && !submitted && (
               <>
-                <p>Congratulations you made it into the top 10 leaderboard!</p>
+                <h3>Congratulations you made it into the top 10 leaderboard!</h3>
+                <p>Add your name below and submit to be added to the leaderboard Ignore and click done to not be added to leaderboard</p>
                 <input
+                  className = "name-input"
                   type = "text"
                   placeholder = "Please enter your name"
                   value = {playerName}
                   onChange = {(e) => setPlayerName(e.target.value)}
                 />
-                <button onClick={submitScore}>Submit Score</button>
+                <button className="submit-score" onClick={submitScore}>Submit Score</button>
               </>
             )}
             {submitted && <p>Score submitted to leaderboard!</p>}
