@@ -126,6 +126,24 @@ function Game({score, setScore, setGameStarted}) {
     await supabase
       .from('leaderboard')
       .insert([{name: playerName, score: score}])
+
+    const {count} = await supabase
+      .from('leaderboard')
+      .select('id', {count: 'exact', head: true})  //count how many are in the leaderboard out of 10, head true = only get the count not the data
+
+    if(count > 10){
+      const {data} = await supabase
+        .from('leaderboard')
+        .select('id, score')
+        .order('score', {ascending: true})  //lowest score first
+        .limit(1)  //select only one
+
+      await supabase
+        .from('leaderboard')
+        .delete()
+        .eq('id', data[0].id)  //delete where id = data[0].id
+    }
+
     setSubmitted(true)  //score submitted
   }
 
