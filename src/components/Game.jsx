@@ -149,6 +149,12 @@ function Game({score, setScore, setGameStarted}) {
 
   useEffect(() => {
     if(gameOver){
+      const highscore = parseInt(localStorage.getItem('highscore')) || 0  //get local highscore, if not set then highscore = 0
+      
+      if(score > highscore){
+        localStorage.setItem('highscore', score)  //set new highscore
+      }
+      
       checkLeaderboard()
     }
   }, [gameOver])

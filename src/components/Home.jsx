@@ -18,6 +18,8 @@ function Home({ score, startGame }) {
     getLeaderboard()
 
   }, [])
+  
+  const highscore = parseInt(localStorage.getItem('highscore')) || 0  //get highscore, if no highscore then highscore = 0
 
   return (
     <div className="home">
