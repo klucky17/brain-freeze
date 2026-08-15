@@ -36,7 +36,11 @@ function Home({ score, startGame }) {
         <h2>Top 10 Leaderboard</h2>
         <ol>
           {leaderboard.map((entry, index) => (
-            <li key={index}>{entry.name} - {entry.score}</li>
+            <li key={index}>
+              <span>{index + 1}.</span>  {/*show ranking numbers*/}
+              <span>{entry.name}</span>
+              <span>{entry.score}</span>
+            </li>
           ))}
         </ol>
       </div>

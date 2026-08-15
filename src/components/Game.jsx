@@ -83,7 +83,7 @@ function Game({score, setScore, setGameStarted}) {
   const [playerOrder, setPlayerOrder] = useState([])
 
   //game timer
-  const [time, setTime] = useState(60)  //60 seconds
+  const [time, setTime] = useState(45)  //45 seconds
   const [gameOver, setGameOver] = useState(false)  //start with gameOver = false
 
   useEffect(() => {
@@ -164,7 +164,7 @@ function Game({score, setScore, setGameStarted}) {
 
             <button className="popup-done" onClick={() => {
               //reset everything
-              setTime(60)  //set time back to 60 seconds
+              setTime(45)  //set time back to 45 seconds
               setGameOver(false)
               setScore(0)
               setGameStarted(false)

@@ -30,6 +30,17 @@
     text-align: center
 }
 
+.leaderboard ol{
+    list-style-position: inside;
+    padding: 0px;
+}
+
+.leaderboard li{
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 20px;  /*height width*/
+}
+
 .leaderboard{
     background-color: white;
     padding: 20px;
@@ -39,4 +50,6 @@
     position: absolute;
     top: 12vh;
     left: 12vh;
+    text-align: center;
+    font-size: 4vh;
 }
