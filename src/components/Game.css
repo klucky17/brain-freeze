@@ -88,6 +88,23 @@ button:disabled{
     position: absolute;
 }
 
+/*order in text format*/
+.order-text{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    bottom: 3vh;
+    left: 15vh;
+}
+
+.order-text h3{
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/*order in picture format*/
 .order-box{
     background-image: url('/speech bubble.png');
     background-size: contain;
@@ -194,4 +211,27 @@ button:disabled{
     position: absolute;
     top: 63vh;
     right: 88vh;
+}
+
+.wrong-text{
+    color: rgb(221, 93, 93);
+    text-align: center;
+    font-size: 32px;
+    position: absolute;
+    top: 10vh;
+    left: 85vh;
+    width: 200px;
+}
+
+.wrong-order{
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake{
+    0%   {transform: translateX(0)}         /*original position*/
+    20%  {transform: translateX(-10px)}     /*shift left*/
+    40%  {transform: translateX(10px)}      /*shift right*/
+    60%  {transform: translateX(-10px)}     /*shift left*/
+    80%  {transform: translateX(10px)}      /*shift right*/
+    100% {transform: translateX(0)}         /*original position*/
 }

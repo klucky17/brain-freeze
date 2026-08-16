@@ -65,6 +65,8 @@ function Game({score, setScore, setGameStarted}) {
       setOrder(getOrder())  //get new customer order
     } else{
       setScore(score - 100)  //minus points for each wrong order
+      setWrong(true)
+      setTimeout(() => setWrong(false), 3000)  //reset after 3secs -> wrong text only shows for 3 secs
     }
   }
 
@@ -85,6 +87,8 @@ function Game({score, setScore, setGameStarted}) {
   //game timer
   const [time, setTime] = useState(45)  //45 seconds
   const [gameOver, setGameOver] = useState(false)  //start with gameOver = false
+
+  const [wrong, setWrong] = useState(false)  //wrong order
 
   useEffect(() => {
     if(time === 0){  //timer done, times up
@@ -159,9 +163,22 @@ function Game({score, setScore, setGameStarted}) {
     }
   }, [gameOver])
 
+  let gameClass = "game"
+  if(wrong){
+    gameClass = "game wrong-order"
+  }
+
   return(
     /*display current score*/
-    <div className="game">
+    <div className={gameClass}>
+
+      {/*if the order is wrong, inform the player*/}
+      {wrong && (
+        <>
+          <p className="wrong-text">Wrong Order! <br/> -100</p>
+        </>
+      )}
+      
       <h2 className="timer">{time}s</h2>
       <h2>Score: {score}</h2>
 
@@ -204,14 +221,22 @@ function Game({score, setScore, setGameStarted}) {
       {/*customer order*/}
       <div className="order-box" key={order[0]+order.length}>  {/*key is for slide in animation*/}
 
-      {/*display order from the array*/}
-        {order.slice().map((item, index) => (
-          <img key={index} src={displayOrder(item)} alt={item} width={43}
-          height={syrups.includes(item) ? 25:
-                  toppings.includes(item) ? 20:
-                  40}  //scoops, cups -> default height
+        {/*display order from the array*/}
+          {order.slice().map((item, index) => (
+            <img key={index} src={displayOrder(item)} alt={item} width={43}
+            height={syrups.includes(item) ? 25:
+                    toppings.includes(item) ? 20:
+                    40}  //scoops, cups -> default height
 
-          />
+            />
+          ))}
+      </div>
+
+      {/*dispay order in text version*/}
+      <div className="order-text">
+        <h3>Order:</h3>
+        {order.slice().reverse().map((item, index) => (
+          <p key={index}>{item}</p>
         ))}
       </div>
 
