@@ -63,6 +63,7 @@ function Game({score, setScore, setGameStarted}) {
       setScore(score + 25*(order.length-1))  //25 points for each item excluding the cone
       setPlayerOrder([])  //reset created order
       setOrder(getOrder())  //get new customer order
+      setCustomer(customers[Math.floor(Math.random() * customers.length)])  //get new customer at random
     } else{
       setScore(score - 100)  //minus points for each wrong order
       setWrong(true)
@@ -83,6 +84,10 @@ function Game({score, setScore, setGameStarted}) {
   const toppings = ["sprinkles", "cherry", "cookie sticks"]
   const [order, setOrder] = useState(getOrder())
   const [playerOrder, setPlayerOrder] = useState([])
+
+  //penguin customers
+  const customers = ["original penguin", "scarf penguin", "muff penguin", "hat penguin"]
+  const [customer, setCustomer] = useState(customers[Math.floor(Math.random() * customers.length)])
 
   //game timer
   const [time, setTime] = useState(45)  //45 seconds
@@ -230,6 +235,11 @@ function Game({score, setScore, setGameStarted}) {
 
             />
           ))}
+      </div>
+
+      {/*customer image*/}
+      <div className="penguin-customer" key={customer}>  {/*key is for slide in animation*/}
+        <img src={`/customers/${customer}.png`} alt={customer} width={250} height={250}/>
       </div>
 
       {/*dispay order in text version*/}

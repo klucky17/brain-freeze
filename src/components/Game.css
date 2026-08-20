@@ -121,11 +121,11 @@ button:disabled{
     text-align: center;
     padding: 20px;
 
-    animation: slideIn 0.5s ease-out forwards;
+    animation: slideIn 0.5s ease-out forwards;  /*ease out = start fast, slows at end, forwards = stay at final position when done*/
 }
 
 /*items in the speech bubble*/
-.order-box img {
+.order-box img{
     margin-bottom: -8px;
 }
 
@@ -135,6 +135,22 @@ button:disabled{
     }
     to{
         right: 39vh;  /*go back to original position*/
+    }
+}
+
+.penguin-customer{
+    position: fixed;
+    bottom: 49vh;
+    left: 80vh;
+    animation: slideInCustomer 0.5s ease-out forwards;
+}
+
+@keyframes slideInCustomer{
+    from{
+        left: -100vw;
+    }
+    to{
+        left: 80vh;
     }
 }
 
