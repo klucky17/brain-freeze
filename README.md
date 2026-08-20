@@ -11,8 +11,8 @@ Note: order of toppings (sprinkles, cherries, cookie sticks) does not matter
 Inspired by an ice cream game I used to play on my mom's phone when I was a kid  
 Since it no longer exists in the App Store (ie., I couldn't find it), I decided to make my own version, which is much simpler than the actual game and has different visuals  
 
-The leaderboard was made using SQL and connected to Supabase
-Vercel was used to create a public website link
+The leaderboard was made using SQL and connected to Supabase  
+Vercel was used to create a public website link  
 The personal high score shown on the home page uses local storage data, so if website data is cleared, the high score will also be cleared  
 
 All visuals and designs are hand-drawn by me \ ^.^ /
