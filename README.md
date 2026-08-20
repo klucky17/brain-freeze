@@ -1,16 +1,28 @@
-# React + Vite
+# How to Play
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Follow the order from the image box or the text in the bottom left corner  
+Create the ice cream in the correct order to score points; points are scaled to the size of the order and -100 for each incorrect order  
+If you get into the leaderboard, make sure to click submit beside the text box to see yourself ^.^  
+Note: order of toppings (sprinkles, cherries, cookie sticks) does not matter  
 
-Currently, two official plugins are available:
+[Click to Play Brain Freeze](https://brain-freeze-six.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Game/Website Description
+Inspired by an ice cream game I used to play on my mom's phone when I was a kid  
+Since it no longer exists in the App Store (ie., I couldn't find it), I decided to make my own version, which is much simpler than the actual game and has different visuals  
 
-## React Compiler
+The leaderboard was made using SQL and connected to Supabase
+Vercel was used to create a public website link
+The personal high score shown on the home page uses local storage data, so if website data is cleared, the high score will also be cleared  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+All visuals and designs are hand-drawn by me \ ^.^ /
 
-## Expanding the ESLint configuration
+## Languaues Used
+JavaScript  
+HTML  
+CSS  
+SQL  
+React
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Template Used
+React working in Vite with HMR and some ESLint rules
