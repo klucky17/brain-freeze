@@ -1,7 +1,10 @@
 # How to Play
 
 Follow the order from the image box or the text in the bottom left corner  
-Create the ice cream in the correct order to score points; points are scaled to the size of the order and -100 for each incorrect order  
+Create the ice cream in the correct order to score points; points are scaled to the size of the order  
+  - 25 points for each item in the order excluding the cone
+  - -100 for each incorrect order
+
 If you get into the leaderboard, make sure to click submit beside the text box to see yourself ^.^  
 Note: order of toppings (sprinkles, cherries, cookie sticks) does not matter  
 
