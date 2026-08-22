@@ -180,12 +180,12 @@ function Game({score, setScore, setGameStarted}) {
       {/*if the order is wrong, inform the player*/}
       {wrong && (
         <>
-          <p className="wrong-text">Wrong Order! <br/> -100</p>
+          <p className="wrong-text">That's not my order! <br/> -100</p>
         </>
       )}
       
       <h2 className="timer">{time}s</h2>
-      <h2>Score: {score}</h2>
+      <h2 className="score">Score: {score}</h2>
 
       {/*game over pop up on top of the game*/}
       {gameOver && (

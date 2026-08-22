@@ -26,7 +26,6 @@ button{  /*remove def*/
 }
 
 button:disabled{
-    /*opacity: 0.3;  /*gray out disabled buttons*/
     cursor: not-allowed;
 }
 
@@ -34,8 +33,8 @@ button:disabled{
     display: grid;
     grid-template-columns: repeat(3, fit-content(100%));  /*pictures only as wide as its content*/
     gap: 2px 6px;  /*vertical, horizontal*/
-    top: 56vh;
-    right: 100vh;
+    top: 463px;
+    right: 827px;
     position: absolute;
 }
 
@@ -43,8 +42,8 @@ button:disabled{
     display: grid;
     grid-template-columns: repeat(3, fit-content(100%));  /*pictures only as wide as its content*/
     gap: 2px 4px;  /*vertical, horizontal*/
-    top: 63vh;
-    right: 66vh;
+    top: 521px;
+    right: 546px;
     position: absolute;
 }
 
@@ -52,8 +51,8 @@ button:disabled{
     display: grid;
     grid-template-columns: repeat(3, fit-content(100%));  /*pictures only as wide as its content*/
     gap: 2px 10px;  /*vertical, horizontal*/
-    top: 47vh;
-    right: 69vh;
+    top: 388px;
+    right: 570.5px;
     position: absolute;
 }
 
@@ -61,8 +60,8 @@ button:disabled{
     display: grid;
     grid-template-columns: repeat(3, fit-content(100%));  /*pictures only as wide as its content*/
     gap: 2px 10px;  /*vertical, horizontal*/
-    top: 75vh;
-    right: 69.5vh;
+    top: 621px;
+    right: 575px;
     position: absolute;
 }
 
@@ -72,8 +71,8 @@ button:disabled{
     padding: 30px 30px;  /*vertical, horizontal*/
     font-size: 25px;
     border-radius: 8px;  /*rounded corners*/
-    top: 85vh;
-    right: 65vh;
+    top: 703px;
+    right: 538px;
     position: absolute;
 }
 
@@ -83,8 +82,8 @@ button:disabled{
     padding: 30px 15px;
     font-size: 25px;
     border-radius: 8px;  /*rounded corners*/
-    top: 85vh;
-    right: 81vh;
+    top: 703px;
+    right: 670px;
     position: absolute;
 }
 
@@ -95,8 +94,8 @@ button:disabled{
     text-align: center;
     font-size: 18px;
     position: absolute;
-    bottom: 3vh;
-    left: 15vh;
+    top: 475px;
+    left: 124px;
 }
 
 .order-text h3{
@@ -110,10 +109,11 @@ button:disabled{
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    right: 39vh;
+    right: 323px;
     position: fixed;
-    height: 45vh;
-    width: 45vh;
+    height: 372px;
+    width: 372px;
+    bottom: 423px;
 
     display: flex;
     flex-direction: column-reverse;
@@ -134,23 +134,23 @@ button:disabled{
         right: 100vw;  /*slide in from the left side of the screen*/
     }
     to{
-        right: 39vh;  /*go back to original position*/
+        right: 323px;  /*go back to original position*/
     }
 }
 
 .penguin-customer{
     position: fixed;
-    bottom: 49vh;
-    left: 80vh;
+    bottom: 405px;
+    right: 624px;
     animation: slideInCustomer 0.5s ease-out forwards;
 }
 
 @keyframes slideInCustomer{
     from{
-        left: -100vw;
+        right: 100vw;
     }
     to{
-        left: 80vh;
+        right: 624px;
     }
 }
 
@@ -159,8 +159,8 @@ button:disabled{
     flex-direction: column-reverse;
     align-items: center;
     position: fixed;
-    right: 30vh;
-    bottom: 18vh;
+    right: 248px;
+    bottom: 149px;
 }
 
 /*items*/
@@ -168,11 +168,18 @@ button:disabled{
   margin-bottom: -12px;
 }
 
+.score{
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 40px;
+}
+
 .timer{
     position: fixed;
     top: 10px;
     right: 10px;
-    font-size: 6vh;
+    font-size: 50px;
 }
 
 .popup-overlay{
@@ -196,12 +203,12 @@ button:disabled{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    height: 45vh;
-    width: 74vh;
+    height: 373px;
+    width: 613px;
 }
 
 .name-input{
-    width: 43vh;
+    width: 360px;
     font-size: 15px;
 }
 
@@ -213,8 +220,8 @@ button:disabled{
     border-radius: 8px;
     padding: 10px 20px;
     position: absolute;
-    top: 55.8vh;
-    right: 62.5vh;
+    top: 461.5px;
+    right: 517px;
 }
 
 .popup-done{
@@ -225,8 +232,8 @@ button:disabled{
     border-radius: 8px;
     padding: 10px 20px;
     position: absolute;
-    top: 63vh;
-    right: 88vh;
+    top: 521px;
+    right: 727px;
 }
 
 .wrong-text{
@@ -234,9 +241,9 @@ button:disabled{
     text-align: center;
     font-size: 32px;
     position: absolute;
-    top: 10vh;
-    left: 85vh;
-    width: 200px;
+    top: 87px;
+    right: 505px;
+    width: 500px;
 }
 
 .wrong-order{
