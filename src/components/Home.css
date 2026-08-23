@@ -1,12 +1,24 @@
 .home{
-    background-image: url('/home screen.png');
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.home-container{
+    background-image: url('/game-screen.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh;  /*full screen height*/
     position: relative;
-    top: 0px;
-    right: 0px
+
+    /*for the per device scaling*/
+    transform: scale(var(--scale));
+    transform-origin: center center;
+    height: 827px;
+    width: 1536px;
 }
 
 .start-button{

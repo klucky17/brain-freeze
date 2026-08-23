@@ -175,7 +175,7 @@ function Game({score, setScore, setGameStarted}) {
 
   useEffect(() => {
     function updateScale(){
-      const scale = Math.min(  //min picks the smaller number -> height or width so that nothing gets cut off
+      const scale = Math.max(  //max picks the bigger number -> height or width so that whole screen gets filled
         window.innerWidth / 1536,  //base laptop size being worked on -> dell xps 15 9520
         window.innerHeight / 827
       )
@@ -184,7 +184,7 @@ function Game({score, setScore, setGameStarted}) {
     updateScale()
     window.addEventListener('resize', updateScale)  //update scale everytime the window gets resized
     return () => window.removeEventListener('resize', updateScale)  //stop the resize listener from running -> so it doesnt run in the background
-  }, [])  //[] means only 
+  }, [])  //[] means only run/setup once when game loads
 
   return(
     <div className={gameClass}>  {/*for if there is a wrong order the class with switch from game to game wrong-order*/}

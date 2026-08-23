@@ -5,7 +5,6 @@
 }
 
 .game{
-    /*for the per device scaling*/
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -20,7 +19,10 @@
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+
+    /*for the per device scaling*/
     transform: scale(var(--scale));
+    transform-origin: center center;
     height: 827px;
     width: 1536px;
 }
