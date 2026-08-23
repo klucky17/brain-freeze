@@ -175,7 +175,7 @@ function Game({score, setScore, setGameStarted}) {
 
   useEffect(() => {
     function updateScale(){
-      const scale = Math.max(  //max picks the bigger number -> height or width so that whole screen gets filled
+      const scale = Math.min(  //min picks the smaller number -> height or width so that nothing gets cut off
         window.innerWidth / 1536,  //base laptop size being worked on -> dell xps 15 9520
         window.innerHeight / 827
       )
