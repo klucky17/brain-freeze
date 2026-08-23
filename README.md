@@ -8,6 +8,8 @@ Create the ice cream in the correct order to score points; points are scaled to 
 If you get into the leaderboard, make sure to click submit beside the text box to see yourself ^.^  
 Note: order of toppings (sprinkles, cherries, cookie sticks) does not matter  
 
+** GAME IS BEST ON LAPTOP/PC **
+
 [Click to Play Brain Freeze](https://brain-freeze-six.vercel.app/)
 
 ## Game/Website Description
