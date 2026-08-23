@@ -173,166 +173,180 @@ function Game({score, setScore, setGameStarted}) {
     gameClass = "game wrong-order"
   }
 
+  useEffect(() => {
+    function updateScale(){
+      const scale = Math.min(  //min picks the smaller number -> height or width so that nothing gets cut off
+        window.innerWidth / 1536,  //base laptop size being worked on -> dell xps 15 9520
+        window.innerHeight / 827
+      )
+      document.documentElement.style.setProperty('--scale', scale)  //set css variable --scale to scale
+    }
+    updateScale()
+    window.addEventListener('resize', updateScale)  //update scale everytime the window gets resized
+    return () => window.removeEventListener('resize', updateScale)  //stop the resize listener from running -> so it doesnt run in the background
+  }, [])  //[] means only 
+
   return(
-    /*display current score*/
-    <div className={gameClass}>
+    <div className={gameClass}>  {/*for if there is a wrong order the class with switch from game to game wrong-order*/}
+      <div className="game-container">
 
-      {/*if the order is wrong, inform the player*/}
-      {wrong && (
-        <>
-          <p className="wrong-text">That's not my order! <br/> -100</p>
-        </>
-      )}
-      
-      <h2 className="timer">{time}s</h2>
-      <h2 className="score">Score: {score}</h2>
+        {/*if the order is wrong, inform the player*/}
+        {wrong && (
+          <>
+            <p className="wrong-text">That's not my order!<br/>-100</p>
+          </>
+        )}
+        
+        <h2 className="timer">{time}s</h2>
+        <h2 className="score">Score: {score}</h2>
 
-      {/*game over pop up on top of the game*/}
-      {gameOver && (
-        <div className="popup-overlay">
-          <div className="popup">
-            <h1>Time's Up!</h1>
-            <p>Score: {score}</p>
+        {/*game over pop up on top of the game*/}
+        {gameOver && (
+          <div className="popup-overlay">
+            <div className="popup">
+              <h1>Time's Up!</h1>
+              <p>Score: {score}</p>
 
-            {isLeader && !submitted && (
-              <>
-                <h3>Congratulations you made it into the top 10 leaderboard!</h3>
-                <p>Add your name below and submit to be added to the leaderboard Ignore and click done to not be added to leaderboard</p>
-                <input
-                  className = "name-input"
-                  type = "text"
-                  placeholder = "Please enter your name"
-                  value = {playerName}
-                  onChange = {(e) => setPlayerName(e.target.value)}
-                />
-                <button className="submit-score" onClick={submitScore}>Submit Score</button>
-              </>
-            )}
-            {submitted && <p>Score submitted to leaderboard!</p>}
+              {isLeader && !submitted && (
+                <>
+                  <h3>Congratulations you made it into the top 10 leaderboard!</h3>
+                  <p>Add your name below and submit to be added to the leaderboard Ignore and click done to not be added to leaderboard</p>
+                  <input
+                    className = "name-input"
+                    type = "text"
+                    placeholder = "Please enter your name"
+                    value = {playerName}
+                    onChange = {(e) => setPlayerName(e.target.value)}
+                  />
+                  <button className="submit-score" onClick={submitScore}>Submit Score</button>
+                </>
+              )}
+              {submitted && <p>Score submitted to leaderboard!</p>}
 
-            <button className="popup-done" onClick={() => {
-              //reset everything
-              setTime(45)  //set time back to 45 seconds
-              setGameOver(false)
-              setScore(0)
-              setGameStarted(false)
-            }}>
-              Done
-            </button>
+              <button className="popup-done" onClick={() => {
+                //reset everything
+                setTime(45)  //set time back to 45 seconds
+                setGameOver(false)
+                setScore(0)
+                setGameStarted(false)
+              }}>
+                Done
+              </button>
+            </div>
           </div>
+        )}
+
+        {/*customer order*/}
+        <div className="order-box" key={order[0]+order.length}>  {/*key is for slide in animation*/}
+
+          {/*display order from the array*/}
+            {order.slice().map((item, index) => (
+              <img key={index} src={displayOrder(item)} alt={item} width={43}
+              height={syrups.includes(item) ? 25:
+                      toppings.includes(item) ? 20:
+                      40}  //scoops, cups -> default height
+
+              />
+            ))}
         </div>
-      )}
 
-      {/*customer order*/}
-      <div className="order-box" key={order[0]+order.length}>  {/*key is for slide in animation*/}
+        {/*customer image*/}
+        <div className="penguin-customer" key={customer}>  {/*key is for slide in animation*/}
+          <img src={`/customers/${customer}.png`} alt={customer} width={250} height={250}/>
+        </div>
 
-        {/*display order from the array*/}
-          {order.slice().map((item, index) => (
-            <img key={index} src={displayOrder(item)} alt={item} width={43}
-            height={syrups.includes(item) ? 25:
-                    toppings.includes(item) ? 20:
-                    40}  //scoops, cups -> default height
-
-            />
+        {/*dispay order in text version*/}
+        <div className="order-text">
+          <h3>Order:</h3>
+          {order.slice().reverse().map((item, index) => (
+            <p key={index}>{item}</p>
           ))}
-      </div>
-
-      {/*customer image*/}
-      <div className="penguin-customer" key={customer}>  {/*key is for slide in animation*/}
-        <img src={`/customers/${customer}.png`} alt={customer} width={250} height={250}/>
-      </div>
-
-      {/*dispay order in text version*/}
-      <div className="order-text">
-        <h3>Order:</h3>
-        {order.slice().reverse().map((item, index) => (
-          <p key={index}>{item}</p>
-        ))}
-      </div>
-
-      {/*display all items as buttons*/}
-      <div className="buttons">
-
-        <div className="flavour-buttons">
-        {flavours.map((flavour) => (
-          <button
-            key={flavour}
-            onClick={() => addItem(flavour)}  /*add scoop*/
-            disabled={playerOrder.filter(i => flavours.includes(i)).length >= flavours.length  /*max scoops = total num of flavours*/
-                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
-          >
-            <img src={`/buttons/${flavour}-tub.png`} alt={flavour} width={120} height={113} />
-          </button>
-        ))}
         </div>
 
-        <div className="topping-buttons">
-        {toppings.map((topping) => (
-          <button
-            key={topping}
-            onClick={() => addItem(topping)}  /*add topping*/
-            disabled={playerOrder.filter(i => toppings.includes(i)).length >= 2  /*max toppings = 2*/
-                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
-          >
-            <img src={`/buttons/${topping}-jar.png`} alt={topping} width={75} height={90} />
-          </button>
-        ))}
-        </div>
+        {/*display all items as buttons*/}
+        <div className="buttons">
 
-        <div className="syrup-buttons">
-        {syrups.map((syrup) => (
-          <button
-            key={syrup}
-            onClick={() => addItem(syrup)}  /*add syrup*/
-            disabled={playerOrder.filter(i => syrups.includes(i)).length >= 2  /*max syrups = 2*/
-                      || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
-          >
-            <img src={`/buttons/${syrup}-bottle.png`} alt={syrup} width={55} height={130} />
-          </button>
-        ))}
-        </div>
-
-        <div className="cone-buttons">
-        {cones.map((cone) => (
-          <button
-            key={cone}
-            onClick={() => addItem(cone)}  /*add cone*/
-            disabled={playerOrder.some(i => cones.includes(i))}  /*disable cone buttons when a cone is already chosen*/
-          >
-            <img src={`/buttons/${cone}-button.png`} alt={cone} width={75} height={60} />
-          </button>
-        ))}
-        </div>
-
-      </div>
-
-      <div className="player-order">
-          {playerOrder.filter(Boolean).slice().map((item, index) => (
-            <img key={index} src={displayOrder(item)} alt={item} width={63} 
-            height={syrups.includes(item) ? 38:
-                    item === 'cherry' ? 24:
-                    toppings.includes(item) ? 30:
-                    60}  //scoops, cups -> default
-            style={{marginBottom:  //make the items layer ontop of each other nicley
-              syrups.includes(item) ? '-32px':
-              item === 'cherry' ? '-14px':
-              item === 'cookie sticks' ? '-20px':
-              item === 'sprinkles' ? '-32px':
-              '-12px'  //scoops, cups -> default
-            }}
-            />
+          <div className="flavour-buttons">
+          {flavours.map((flavour) => (
+            <button
+              key={flavour}
+              onClick={() => addItem(flavour)}  /*add scoop*/
+              disabled={playerOrder.filter(i => flavours.includes(i)).length >= flavours.length  /*max scoops = total num of flavours*/
+                        || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
+            >
+              <img src={`/buttons/${flavour}-tub.png`} alt={flavour} width={120} height={113} />
+            </button>
           ))}
+          </div>
+
+          <div className="topping-buttons">
+          {toppings.map((topping) => (
+            <button
+              key={topping}
+              onClick={() => addItem(topping)}  /*add topping*/
+              disabled={playerOrder.filter(i => toppings.includes(i)).length >= 2  /*max toppings = 2*/
+                        || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
+            >
+              <img src={`/buttons/${topping}-jar.png`} alt={topping} width={75} height={90} />
+            </button>
+          ))}
+          </div>
+
+          <div className="syrup-buttons">
+          {syrups.map((syrup) => (
+            <button
+              key={syrup}
+              onClick={() => addItem(syrup)}  /*add syrup*/
+              disabled={playerOrder.filter(i => syrups.includes(i)).length >= 2  /*max syrups = 2*/
+                        || !playerOrder.some(i => cones.includes(i))}  /*cone has to be chosen before adding anything else*/
+            >
+              <img src={`/buttons/${syrup}-bottle.png`} alt={syrup} width={55} height={130} />
+            </button>
+          ))}
+          </div>
+
+          <div className="cone-buttons">
+          {cones.map((cone) => (
+            <button
+              key={cone}
+              onClick={() => addItem(cone)}  /*add cone*/
+              disabled={playerOrder.some(i => cones.includes(i))}  /*disable cone buttons when a cone is already chosen*/
+            >
+              <img src={`/buttons/${cone}-button.png`} alt={cone} width={75} height={60} />
+            </button>
+          ))}
+          </div>
+
+        </div>
+
+        <div className="player-order">
+            {playerOrder.filter(Boolean).slice().map((item, index) => (
+              <img key={index} src={displayOrder(item)} alt={item} width={63} 
+              height={syrups.includes(item) ? 38:
+                      item === 'cherry' ? 24:
+                      toppings.includes(item) ? 30:
+                      60}  //scoops, cups -> default
+              style={{marginBottom:  //make the items layer ontop of each other nicley
+                syrups.includes(item) ? '-32px':
+                item === 'cherry' ? '-14px':
+                item === 'cookie sticks' ? '-20px':
+                item === 'sprinkles' ? '-32px':
+                '-12px'  //scoops, cups -> default
+              }}
+              />
+            ))}
+        </div>
+
+        {/*check order and serve to customer*/}
+        <button className="serve-button" onClick={checkOrder}>
+          Serve
+        </button>
+
+        {/*reset ice cream*/}
+        <button className="garbage-button" onClick={() => setPlayerOrder([])}>
+          Garbage
+        </button>
       </div>
-
-      {/*check order and serve to customer*/}
-      <button className="serve-button" onClick={checkOrder}>
-        Serve
-      </button>
-
-      {/*reset ice cream*/}
-      <button className="garbage-button" onClick={() => setPlayerOrder([])}>
-        Garbage
-      </button>
     </div>
   )
 }
